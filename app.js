@@ -3,6 +3,9 @@ var volleyball = require('volleyball');
 var bodyParser = require('body-parser');
 var nunjucks = require('nunjucks');
 var path = require('path');
+var attractionsRouter = require('./routes/api/attractions');
+var daysRouter = require('./routes/api/days');
+
 
 var db = require('./models');
 
@@ -27,6 +30,9 @@ app.use(express.static(path.join(__dirname, '/public')));
 
 // serve dynamic routes
 app.use(require('./routes'));
+
+app.use('/api/days', daysRouter);
+app.use('/api', attractionsRouter);
 
 // failed to catch req above means 404, forward to error handler
 app.use(function (req, res, next) {

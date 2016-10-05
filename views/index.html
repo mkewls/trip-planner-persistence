@@ -82,8 +82,26 @@
   </div>
 </div>
 <script>
-  var hotels = {{ templateHotels | dump | safe }};
-  var restaurants = {{ templateRestaurants | dump | safe }};
-  var activities = {{ templateActivities | dump | safe }};
+  var hotels =
+    $.get('/api/hotels')
+      .then(hotels => {
+        hotels.forEach(hotel => {
+          $('#hotel-choices').append(`<option>${hotel.name}</option>`);
+        })
+      });
+  var restaurants =
+    $.get('/api/restaurants')
+      .then(restaurants => {
+        restaurants.forEach(restaurant => {
+          $('#restaurant-choices').append(`<option>${restaurant.name}</option>`);
+        })
+      });
+  var activities =
+    $.get('/api/activities')
+      .then(activities => {
+        activities.forEach(activity => {
+          $('#activity-choices').append(`<option>${activity.name}</option>`);
+        })
+      });
 </script>
 {% endblock %}
