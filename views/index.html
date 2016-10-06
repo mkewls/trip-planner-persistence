@@ -81,50 +81,11 @@
     </div>
   </div>
 </div>
+<script src="/js/populate.js"></script>
+<script src="/js/listeners.js"></script>
 <script>
   var currentDay = 1;
-
-  var hotels =
-    $.get('/api/hotels')
-      .then(hotels => {
-        hotels.forEach(hotel => {
-          $('#hotel-choices').append(`<option name="${hotel.id}">${hotel.name}</option>`);
-        })
-      });
-  var restaurants =
-    $.get('/api/restaurants')
-      .then(restaurants => {
-        restaurants.forEach(restaurant => {
-          $('#restaurant-choices').append(`<option name="${restaurant.id}">${restaurant.name}</option>`);
-        })
-      });
-  var activities =
-    $.get('/api/activities')
-      .then(activities => {
-        activities.forEach(activity => {
-          $('#activity-choices').append(`<option name="${activity.id}">${activity.name}</option>`);
-        })
-      });
-
-  $("#restaurant-choices + button").on("click", () => {
-    var selections = $('#restaurant-choices');
-    console.log("SELECTIONS: ", selections);
-    var select = selections.find(":selected");
-    //var select = $(selections.find(":selected"));
-    console.log("SELECT: ", select);
-    console.log("NAME: ", select.attr("name"));
-    console.log("OTHER NAME: ", select[0].attributes[0].value)
-    $.ajax({
-      type: "POST",
-      url: `/api/days/${currentDay}/restaurants`,
-      data: {
-        id: select.attr("name")
-      }
-    })
-    .done(() => {
-      console.log("DONE");
-    });
-  })
-
+  loadTables();
+  listen();
 </script>
 {% endblock %}
